@@ -1,4 +1,5 @@
 import './WhyUs.css'
+import type { JSX } from 'react'
 
 type Props = {
   phone?: string
@@ -77,10 +78,18 @@ const REASONS: Reason[] = [
   { id: 'reviews', title: '5 star reviews', desc: 'Proven service across the region.', Icon: ReviewsIcon },
 ]
 
-export default function WhyUs({ phone = '07888505983', onQuoteClick }: Props) {
+export default function WhyUs({ phone = '07888505983', }: Props) {
   const tel = `tel:${phone.replace(/\s+/g, '')}`
+  
+  return (
+    <section>
+      <h2>Why choose us</h2>
+      <a href={tel}>Call {phone}</a>
+    </section>
+  )
 
   return (
+    
     <section id="why" className="why" aria-labelledby="why-title">
       <div className="why__inner">
         <h2 id="why-title" className="why__title">Why choose us</h2>
