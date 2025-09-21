@@ -1,0 +1,133 @@
+.why {
+  padding: 64px 20px;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.why__inner { max-width: 1100px; margin: 0 auto }
+
+.why__title {
+  font-size: clamp(24px, 5vw, 36px);
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
+.why__lead { text-align: center; opacity: .85; margin: 0 0 28px 0 }
+
+/* grid */
+.why__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* card base */
+.card {
+  position: relative;
+  border: 1px solid var(--chip-border, rgba(0,0,0,.12));
+  background: var(--chip-bg, rgba(0,0,0,.04));
+  border-radius: 16px;
+  padding: 18px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 12px;
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .3s ease;
+  will-change: transform;
+  -webkit-backdrop-filter: saturate(140%) blur(2px);
+  backdrop-filter: saturate(140%) blur(2px);
+}
+.dark .card { border-color: var(--chip-border, rgba(255,255,255,.25)); background: var(--chip-bg, rgba(255,255,255,.06)) }
+.card:hover { transform: translateY(-6px) }
+
+/* icon */
+.card__icon { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; background: var(--brand, #2563eb); color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.2) }
+.icon { width: 32px; height: 32px; display: block }
+
+/* content that hides on hover */
+.card__content { transition: opacity .25s ease, transform .25s ease }
+.card:hover .card__content,
+.card:focus-within .card__content {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* icon fades slightly so animation is the focus */
+.card:hover .card__icon,
+.card:focus-within .card__icon { opacity: .15 }
+
+/* overlay with the animation */
+.card__anim {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transform: scale(.98);
+  transition: opacity .25s ease, transform .25s ease;
+  pointer-events: none;
+  color: var(--ink);
+}
+.dark .card__anim { color: #fff }
+.card:hover .card__anim,
+.card:focus-within .card__anim {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* default expressive animations per card */
+
+/* insured, draw shield and check */
+.anim--shield .shield, .anim--shield .check {
+  stroke-dasharray: 160;
+  stroke-dashoffset: 160;
+}
+.card:hover .anim--shield .shield,
+.card:focus-within .anim--shield .shield { animation: draw 700ms ease forwards }
+.card:hover .anim--shield .check,
+.card:focus-within .anim--shield .check { animation: draw 600ms ease 450ms forwards }
+
+/* ontime, clock hands rotate */
+.anim--clock .hand { transform-origin: 32px 32px }
+.card:hover .anim--clock .hour,
+.card:focus-within .anim--clock .hour { animation: rot 8s linear infinite }
+.card:hover .anim--clock .min,
+.card:focus-within .anim--clock .min { animation: rot 4s linear infinite }
+
+/* care, box bob and strap bounce */
+.card:hover .anim--box .crate,
+.card:focus-within .anim--box .crate { animation: bob 2.4s ease-in-out infinite }
+.card:hover .anim--box .strap,
+.card:focus-within .anim--box .strap { animation: tape 1.2s ease-in-out infinite }
+
+/* pricing, ring pulse */
+.card:hover .anim--pound .ring,
+.card:focus-within .anim--pound .ring { animation: pulse 2s ease-in-out infinite }
+
+/* short notice, bolt flicker */
+.card:hover .anim--bolt .bolt,
+.card:focus-within .anim--bolt .bolt { animation: flicker 1.2s ease-in-out infinite }
+
+/* reviews, stars twinkle */
+.card:hover .anim--stars .star,
+.card:focus-within .anim--stars .star { animation: twinkle 1.6s ease-in-out infinite }
+
+/* keyframes */
+@keyframes draw { to { stroke-dashoffset: 0 } }
+@keyframes rot { to { transform: rotate(360deg) } }
+@keyframes bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-3px) } }
+@keyframes tape { 0%,100% { transform: translateY(0) } 50% { transform: translateY(2px) } }
+@keyframes pulse { 0%,100% { stroke-opacity: .12 } 50% { stroke-opacity: .35 } }
+@keyframes flicker { 0%,100% { filter: drop-shadow(0 0 0 rgba(255,215,0,0)) } 50% { filter: drop-shadow(0 0 10px rgba(255,215,0,.6)) } }
+@keyframes twinkle { 0%,100% { opacity: .6; transform: scale(.9) } 50% { opacity: 1; transform: scale(1.05) } }
+
+/* motion prefs */
+@media (prefers-reduced-motion: reduce) {
+  .card, .card__content, .card__anim { transition: none }
+  .card:hover { transform: none }
+  .anim, .anim * { animation: none !important }
+}
+
+/* responsive */
+@media (max-width: 1024px) { .why__grid { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+@media (max-width: 640px) { .why { padding: 48px 16px } .why__grid { grid-template-columns: 1fr } }

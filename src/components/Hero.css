@@ -1,0 +1,121 @@
+/* Hero uses theme variables provided by .light (Thor) and .dark (Iron Man) on <html> */
+.hero {
+  color: var(--ink);
+  background: var(--hero-bg);
+  padding: 96px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__inner {
+  max-width: 980px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero__eyebrow {
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.9;
+  margin: 0 0 10px 0;
+  color: var(--accent);
+}
+
+.hero__title {
+  font-size: clamp(30px, 6.4vw, 48px);
+  line-height: 1.1;
+  margin: 0 0 14px 0;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.hero__tag {
+  font-size: clamp(16px, 2.6vw, 20px);
+  opacity: 0.95;
+  margin: 0 0 16px 0;
+}
+
+.hero__details {
+  font-size: 16px;
+  line-height: 1.7;
+  opacity: 0.95;
+  margin: 0 0 22px 0;
+}
+
+.hero__bullets {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0;
+  margin: 0 0 28px 0;
+  list-style: none;
+}
+
+.hero__bullets li {
+  border: 1px solid var(--chip-border);
+  background: var(--chip-bg);
+  padding: 12px 14px;
+  border-radius: 10px;
+  -webkit-backdrop-filter: saturate(140%) blur(2px);
+  backdrop-filter: saturate(140%) blur(2px);
+}
+
+.hero__cta {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.06s ease, box-shadow 0.15s ease, background 0.15s ease;
+  color: #fff;
+}
+
+.btn--primary {
+  background: var(--brand);
+  box-shadow: 0 6px 0 var(--brand-dark), 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.btn--primary:hover {
+  background: var(--brand-dark);
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: currentColor;
+  color: var(--ink);
+}
+
+.btn--ghost:hover {
+  background: var(--ghost-hover);
+}
+
+.hero__meta {
+  font-size: 14px;
+  opacity: 0.9;
+  margin: 10px 0 0 0;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 72px 16px;
+  }
+  .hero__bullets {
+    grid-template-columns: 1fr;
+  }
+  .hero__cta {
+    flex-direction: column;
+  }
+}

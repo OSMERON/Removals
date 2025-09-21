@@ -1,0 +1,317 @@
+.reviews {
+  padding: 64px 20px;
+  background: var(--bg);
+  color: var(--ink);
+}
+.reviews__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.reviews__title {
+  font-size: clamp(24px, 5vw, 36px);
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+.reviews__lead {
+  text-align: center;
+  opacity: 0.85;
+  margin: 0 0 20px 0;
+}
+
+/* owner bar */
+.ownerbar {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.ownerbar input[type="password"] {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--chip-border, rgba(0, 0, 0, 0.12));
+  background: var(--chip-bg, rgba(0, 0, 0, 0.04));
+  color: inherit;
+  min-width: 200px;
+}
+.ownerbar__ok {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--brand, #2563eb);
+  color: #fff;
+  font-weight: 600;
+}
+.ownerbar__err {
+  color: #e02424;
+  font-size: 14px;
+}
+
+/* grid */
+.reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+/* cards equal size */
+.review {
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+  border: 1px solid var(--chip-border, rgba(0, 0, 0, 0.12));
+  background: var(--chip-bg, rgba(0, 0, 0, 0.04));
+  border-radius: 16px;
+  padding: 18px;
+  gap: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease,
+    background 0.3s ease;
+  -webkit-backdrop-filter: saturate(140%) blur(2px);
+  backdrop-filter: saturate(140%) blur(2px);
+}
+.dark .review {
+  border-color: var(--chip-border, rgba(255, 255, 255, 0.25));
+  background: var(--chip-bg, rgba(255, 255, 255, 0.06));
+}
+.review:hover {
+  transform: translateY(-6px);
+}
+
+.review--composer {
+  border-style: dashed;
+}
+
+/* header */
+.review__head {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--brand, #2563eb);
+  color: #fff;
+  font-weight: 700;
+}
+.review__name {
+  margin: 0;
+  font-size: 16px;
+}
+.review__sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.8;
+  font-size: 13px;
+}
+.dot {
+  opacity: 0.5;
+}
+
+/* stars */
+.stars {
+  display: inline-flex;
+  gap: 2px;
+  line-height: 0;
+}
+.star {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  opacity: 0.35;
+}
+.star.is-filled {
+  fill: currentColor;
+  opacity: 1;
+}
+
+/* text clamped so heights match */
+.review__text {
+  margin: 2px 0 0 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+
+/* actions */
+.review__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.chip {
+  appearance: none;
+  border: 1px solid var(--chip-border, rgba(0, 0, 0, 0.12));
+  background: var(--chip-bg, rgba(0, 0, 0, 0.04));
+  color: inherit;
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.15s ease, background 0.15s ease,
+    border-color 0.15s ease;
+}
+.chip .count {
+  margin-left: 6px;
+  opacity: 0.8;
+}
+.chip:hover {
+  transform: translateY(-2px);
+}
+.chip.is-active {
+  background: var(--brand, #2563eb);
+  border-color: var(--brand-dark, #1e40af);
+  color: #fff;
+}
+.chip:focus-visible {
+  outline: 3px solid var(--accent, #facc15);
+  outline-offset: 2px;
+}
+
+/* replies list */
+.review__replies {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.reply {
+  border: 1px dashed var(--chip-border, rgba(0, 0, 0, 0.18));
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: transparent;
+}
+.reply--owner {
+  border-style: solid;
+  border-color: var(--brand, #2563eb);
+}
+.reply__head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.reply__name {
+  font-weight: 700;
+}
+.reply__date {
+  font-size: 12px;
+  opacity: 0.7;
+}
+.badge {
+  margin-left: 4px;
+  font-size: 12px;
+  padding: 2px 6px;
+  background: var(--brand, #2563eb);
+  color: #fff;
+  border-radius: 999px;
+}
+.reply__msg {
+  margin: 4px 0 0 0;
+}
+
+/* reply form */
+.replyform {
+  display: grid;
+  gap: 8px;
+  border-top: 1px solid var(--chip-border, rgba(0, 0, 0, 0.12));
+  padding-top: 10px;
+}
+.replyform.is-open {
+  animation: fadeIn 0.2s ease;
+}
+.replyform textarea {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--chip-border, rgba(0, 0, 0, 0.12));
+  background: var(--chip-bg, rgba(0, 0, 0, 0.04));
+  color: inherit;
+  resize: vertical;
+}
+.replyform__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* invalid input */
+.is-invalid {
+  border-color: #e02424 !important;
+}
+
+/* buttons */
+.btn {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.06s ease, box-shadow 0.15s ease, background 0.15s ease,
+    border-color 0.15s ease;
+  color: #fff;
+}
+.btn--primary {
+  background: var(--brand, #2563eb);
+  box-shadow: 0 4px 0 var(--brand-dark, #1e40af), 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.btn--primary:hover {
+  background: var(--brand-dark, #1e40af);
+  transform: translateY(-1px);
+}
+.btn--ghost {
+  background: transparent;
+  border-color: currentColor;
+  color: var(--ink, #0b1220);
+}
+.dark .btn--ghost {
+  color: #fff;
+}
+.btn--ghost:hover {
+  background: var(--ghost-hover, rgba(0, 0, 0, 0.06));
+}
+.btn--danger {
+  background: #d92d20;
+}
+.btn--danger:hover {
+  background: #b42318;
+}
+
+/* motion */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* responsive */
+@media (max-width: 1024px) {
+  .reviews__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .reviews {
+    padding: 48px 16px;
+  }
+  .reviews__grid {
+    grid-template-columns: 1fr;
+  }
+}
