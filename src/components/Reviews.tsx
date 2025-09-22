@@ -1,9 +1,7 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './Reviews.css'
 
-type Props = {
-  reviews?: Review[]
-}
+type Props = { reviews?: Review[] }
 
 type Review = {
   id: string
@@ -30,7 +28,10 @@ const SEED: Review[] = [
 export default function Reviews({ reviews = SEED }: Props) {
   const [userReviews, setUserReviews] = useState<Review[]>([])
   const [hiddenIds, setHiddenIds] = useState<Set<string>>(new Set())
-  const allReviews = useMemo(() => [...reviews, ...userReviews].filter(r => !hiddenIds.has(r.id)), [reviews, userReviews, hiddenIds])
+  const allReviews = useMemo(
+    () => [...reviews, ...userReviews].filter(r => !hiddenIds.has(r.id)),
+    [reviews, userReviews, hiddenIds]
+  )
 
   const [helpful, setHelpful] = useState<HelpfulState>({})
   const [replies, setReplies] = useState<RepliesState>({})
@@ -42,7 +43,6 @@ export default function Reviews({ reviews = SEED }: Props) {
   const [openReplyId, setOpenReplyId] = useState<string | null>(null)
   const [replyDrafts, setReplyDrafts] = useState<Record<string, string>>({})
 
-  // composer state
   const [newName, setNewName] = useState('')
   const [newRating, setNewRating] = useState<number>(5)
   const [newText, setNewText] = useState('')
@@ -107,7 +107,7 @@ export default function Reviews({ reviews = SEED }: Props) {
 
   function loginOwner() {
     setAuthError(null)
-    if (codeInput && codeInput === OWNER_CODE) {
+    if (codeInput === OWNER_CODE) {
       setIsOwner(true)
       localStorage.setItem('owner_auth', '1')
       setCodeInput('')
@@ -149,11 +149,8 @@ export default function Reviews({ reviews = SEED }: Props) {
   function deleteReview(id: string) {
     if (!isOwner) return
     const isUser = userReviews.some(x => x.id === id)
-    if (isUser) {
-      setUserReviews(prev => prev.filter(x => x.id !== id))
-    } else {
-      setHiddenIds(prev => new Set(prev).add(id))
-    }
+    if (isUser) setUserReviews(prev => prev.filter(x => x.id !== id))
+    else setHiddenIds(prev => new Set(prev).add(id))
     setHelpful(prev => {
       const copy = { ...prev }
       delete copy[id]
@@ -199,6 +196,11 @@ export default function Reviews({ reviews = SEED }: Props) {
     setPostedMsg('Thanks, your review has been added')
   }
 
+  // helpers to output ARIA tokens as strings, or omit when false
+  const ariaTrueIf = (cond: boolean) => (cond ? { 'aria-pressed': 'true' as const } : {})
+  const ariaExpandedIf = (cond: boolean) => (cond ? { 'aria-expanded': 'true' as const } : {})
+  const ariaInvalidIf = (cond: boolean) => (cond ? { 'aria-invalid': 'true' as const } : {})
+
   return (
     <section id="reviews" className="reviews" aria-labelledby="reviews-title">
       <div className="reviews__inner">
@@ -218,7 +220,11 @@ export default function Reviews({ reviews = SEED }: Props) {
               <button type="button" className="btn btn--primary" onClick={loginOwner}>
                 Log in as owner
               </button>
-              {authError ? <span className="ownerbar__err" role="status" aria-live="polite">{authError}</span> : null}
+              {authError ? (
+                <span className="ownerbar__err" role="status" aria-live="polite">
+                  {authError}
+                </span>
+              ) : null}
             </>
           ) : (
             <>
@@ -265,7 +271,7 @@ export default function Reviews({ reviews = SEED }: Props) {
                 value={newLocation}
                 onChange={e => setNewLocation(e.target.value)}
                 aria-label="Location"
-                aria-invalid={locError}
+                {...ariaInvalidIf(locError)}
                 required
                 className={locError ? 'is-invalid' : ''}
               />
@@ -280,16 +286,23 @@ export default function Reviews({ reviews = SEED }: Props) {
             />
 
             <div className="composer__actions">
-              <button type="button" className="btn btn--primary" onClick={submitNewReview}>Post review</button>
+              <button type="button" className="btn btn--primary" onClick={submitNewReview}>
+                Post review
+              </button>
             </div>
 
-            {postedMsg ? <p className="composer__msg" role="status" aria-live="polite">{postedMsg}</p> : null}
+            {postedMsg ? (
+              <p className="composer__msg" role="status" aria-live="polite">
+                {postedMsg}
+              </p>
+            ) : null}
           </article>
 
           {allReviews.map(r => {
             const hv = helpful[r.id] ?? { up: 0, down: 0, myVote: null }
             const revReplies = replies[r.id] ?? []
             const isOpen = openReplyId === r.id
+
             return (
               <article key={r.id} className="review" aria-labelledby={`rev-${r.id}-title`}>
                 <header className="review__head">
@@ -313,16 +326,17 @@ export default function Reviews({ reviews = SEED }: Props) {
                     type="button"
                     className={`chip ${hv.myVote === 'up' ? 'is-active' : ''}`}
                     onClick={() => vote(r.id, 'up')}
-                    aria-pressed={hv.myVote === 'up'}
+                    {...ariaTrueIf(hv.myVote === 'up')}
                     aria-label="Helpful"
                   >
                     👍 Helpful <span className="count">{hv.up}</span>
                   </button>
+
                   <button
                     type="button"
                     className={`chip ${hv.myVote === 'down' ? 'is-active' : ''}`}
                     onClick={() => vote(r.id, 'down')}
-                    aria-pressed={hv.myVote === 'down'}
+                    {...ariaTrueIf(hv.myVote === 'down')}
                     aria-label="Not helpful"
                   >
                     👎 Not helpful <span className="count">{hv.down}</span>
@@ -333,7 +347,7 @@ export default function Reviews({ reviews = SEED }: Props) {
                       type="button"
                       className="chip"
                       onClick={() => openReply(r.id)}
-                      aria-expanded={isOpen}
+                      {...ariaExpandedIf(isOpen)}
                       aria-controls={`reply-${r.id}`}
                     >
                       💬 Reply

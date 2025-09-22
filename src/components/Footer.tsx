@@ -28,7 +28,7 @@ export default function Footer() {
             <li><a href="#services">Services</a></li>
             <li><a href="#prices">Prices</a></li>
             <li><a href="#areas">Areas</a></li>
-            <li><a href="#whyus">Why us</a></li>
+            <li><a href="#whys">Why us</a></li>
             <li><a href="#reviews">Reviews</a></li>
             <li><a href="#gallery">Gallery</a></li>
             <li><a href="#faq">FAQ</a></li>
